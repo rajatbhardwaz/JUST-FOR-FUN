@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Surprise Journey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        .container {
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+        button {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .hidden {
+            display: none;
+        }
+        .step {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+        @keyframes surprise {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s forwards;
+        }
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+        .surprise-animation {
+            animation: surprise 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="landing">
+        <h1>Welcome to the Fun Surprise Journey!</h1>
+        <h2>Click below to start your fun adventure.</h2>
+        <button onclick="startJourney()">Start</button>
+    </div>
+
+    <div class="container hidden" id="step1">
+        <h2>Step 1: Solve this simple math question!</h2>
+        <p>What is 5 + 3?</p>
+        <button onclick="checkAnswer(8, 'step2')">8</button>
+        <button onclick="checkAnswer(9, 'step2')">9</button>
+        <button onclick="checkAnswer(7, 'step2')">7</button>
+    </div>
+
+    <div class="container hidden" id="step2">
+        <h2>Step 2: Find the Antonym</h2>
+        <p>What is the opposite of "Hot"?</p>
+        <button onclick="checkAnswer('Cold', 'step3')">Cold</button>
+        <button onclick="checkAnswer('Warm', 'step3')">Warm</button>
+        <button onclick="checkAnswer('Heat', 'step3')">Heat</button>
+    </div>
+
+    <div class="container hidden" id="step3">
+        <h2>Step 3: Final Question</h2>
+        <p>Which is a color?</p>
+        <button onclick="checkAnswer('Blue', 'final')">Blue</button>
+        <button onclick="checkAnswer('Triangle', 'final')">Triangle</button>
+        <button onclick="checkAnswer('Number', 'final')">Number</button>
+    </div>
+
+    <div class="container hidden" id="final">
+        <h2>Congratulations! You've reached the end!</h2>
+        <button onclick="showSurprise()">Show Surprise</button>
+    </div>
+
+    <div class="container hidden" id="surprise">
+        <h2 class="surprise-animation">Your time is wasted by Rajat 🤝</h2>
+    </div>
+
+    <script>
+        let currentStep = 'landing';
+
+        function startJourney() {
+            switchStep('landing', 'step1');
+        }
+
+        function checkAnswer(answer, nextStep) {
+            // Simulate checking the answer (correctness not enforced)
+            switchStep(currentStep, nextStep);
+        }
+
+        function showSurprise() {
+            switchStep('final', 'surprise');
+        }
+
+        function switchStep(fromStep, toStep) {
+            const fromElement = document.getElementById(fromStep);
+            const toElement = document.getElementById(toStep);
+
+            fromElement.classList.add('fade-out');
+
+            setTimeout(() => {
+                fromElement.classList.add('hidden');
+                fromElement.classList.remove('fade-out');
+
+                toElement.classList.remove('hidden');
+                toElement.classList.add('fade-in');
+
+                setTimeout(() => {
+                    toElement.classList.remove('fade-in');
+                }, 500);
+            }, 500);
+
+            currentStep = toStep;
+        }
+    </script>
+</body>
+</html>
